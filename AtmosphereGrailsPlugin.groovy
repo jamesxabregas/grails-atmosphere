@@ -13,7 +13,7 @@ class AtmosphereGrailsPlugin {
 	private static final Logger log = Logger.getLogger('com.odelia.grails.plugins.atmosphere.AtmosphereGrailsPlugin')
 	
     // the plugin version
-    def version = "0.4.2.3"
+    def version = "0.4.2.4"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.5 > *"
     // the other plugins this plugin depends on
