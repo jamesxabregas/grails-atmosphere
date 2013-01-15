@@ -102,16 +102,16 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
 
 	   	ctx.servletContext.setAttribute(StratosphereServlet.ATMOSPHERE_PLUGIN_SERVICE_HANDLERS, ctrlHanlers)		    
         
-    	application.controllerClasses.each { addMethod(it) }	
+    	application.controllerClasses.each { addMethod(it, ctx) }	
     	application.serviceClasses.each { service ->
 			if (getAtmospherePropertyValue(service))
-				addMethod(service)
+				addMethod(service, ctx)
 		}
     }
 
     def onChange = { event ->
 		if (application.isControllerClass(event.source)) {
-			addMethod(event.source)
+			addMethod(event.source, event.ctx)
 		}
     }
 
@@ -120,11 +120,11 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
         // The event is the same as for 'onChange'.
     }
     
-	private addMethod(source) {
+	private addMethod(source, ctx) {
 		log.debug "Adding dynamic method to ${source}"
 		source.metaClass.getBroadcaster = {->
 			def _broadcaster = [:]
-			servletContext[StratosphereServlet.ATMOSPHERE_PLUGIN_HANDLERS_CONFIG].each {
+			ctx.servletContext[StratosphereServlet.ATMOSPHERE_PLUGIN_HANDLERS_CONFIG].each {
 				_broadcaster."${it.key}" = it.value.broadcaster
 			}
 			_broadcaster
