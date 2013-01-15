@@ -12,7 +12,7 @@ import org.apache.log4j.Logger
 class AtmosphereGrailsPlugin {
 
     // the plugin version
-    def version = "0.4.2.4"
+    def version = "1.1.0.beta2"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.5 > *"
     // the other plugins this plugin depends on
