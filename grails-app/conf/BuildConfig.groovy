@@ -26,15 +26,15 @@ grails.project.dependency.resolution = {
     }
 
     plugins{
-        build(":release:2.2.0"){
+        build(":release:3.0.1", ":rest-client-builder:2.0.3"){
             export = false
         }
     }
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-        compile('org.atmosphere:atmosphere-runtime:1.1.0.beta2') {
-            excludes 'slf4j-api', 'atmosphere-ping'
+        compile('org.atmosphere:atmosphere-runtime:2.1.6') {
+             excludes 'slf4j-api', 'atmosphere-ping'
         }
     }
 }

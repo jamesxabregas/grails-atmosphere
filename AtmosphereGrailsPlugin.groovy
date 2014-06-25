@@ -12,9 +12,9 @@ import org.apache.log4j.Logger
 class AtmosphereGrailsPlugin {
 
     // the plugin version
-    def version = "1.1.0.beta2"
+    def version = "2.1.6"
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "1.3.5 > *"
+    def grailsVersion = "2.0.0 > *"
     // the other plugins this plugin depends on
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
@@ -27,8 +27,8 @@ class AtmosphereGrailsPlugin {
     def artefacts = [new AtmosphereHandlerArtefactHandler()]
 
     // TODO Fill in these fields
-    def author = "Bertrand Goetzmann, Stéphane Maldini"
-    def authorEmail = "bgoetzmann@odelia-technologies.com, stephane.maldini@gmail.com"
+    def author = "Bertrand Goetzmann, Stéphane Maldini, James Xabregas"
+    def authorEmail = "bgoetzmann@odelia-technologies.com, stephane.maldini@gmail.com, jamesxabregas@gmail.com"
     def title = "Grails Atmosphere Plugin"
     def description = '''\\
 Provides integration with the Atmosphere framework, a portable AjaxPush/Comet framework.

@@ -11,10 +11,10 @@ class StratosphereServlet extends AtmosphereServlet  {
 	public final static def ATMOSPHERE_PLUGIN_HANDLERS_CONFIG = 'com.odelia.grails.plugins.atmosphere.handlers.config'
 	public final static def ATMOSPHERE_PLUGIN_SERVICE_HANDLERS = 'com.odelia.grails.plugins.atmosphere.service.handlers'
 
-
-
 	@Override
     public void init(final ServletConfig sc) throws ServletException {
+
+        super.configureFramework(sc)
 
         sc.servletContext.setAttribute(ATMOSPHERE_PLUGIN_ATMOSPHERE_SERVLET, this)
         sc.servletContext.setAttribute(ATMOSPHERE_PLUGIN_HANDLERS_CONFIG, framework.atmosphereConfig.handlers())
