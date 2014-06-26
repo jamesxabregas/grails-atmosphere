@@ -6,7 +6,7 @@ This page describes the features of the [Grails Atmosphere plugin](http://grails
 
 The Grails Atmosphere plugin is installed using the Grails command `install-plugin`:
 
-`grails install-plugin atmosphere`
+    grails install-plugin atmosphere
 
 This command will install the latest version of the plugin, version 2.1.6, which includes a Grails runtime dependency (that can be overwritten by the application that uses the plugin) to the Atmosphere's runtime module, version 2.1.6.
 
@@ -34,31 +34,29 @@ Creating an Atmosphere handler by the Grails command `create-atmosphere-handler`
 
 To add an Atmosphere handler to your application, you can use the `create-atmosphere-handler` command coming with the Grails plugin:
 
-`grails create-atmosphere-handler [a.package.handler.name]`
+    grails create-atmosphere-handler [a.package.handler.name]
 
 If you don't enter a name for the handler, qualified or not, the command will ask for one; it has the effect of creating a new Groovy class in the directory `grails-app/atmosphereHandlers`. For example, using `a.package.chat` as name handler, the class `ChatAtmosphereHandler` will be created:
 
-`
-package a.package
-
-import org.atmosphere.cpr.AtmosphereHandler
-import org.atmosphere.cpr.AtmosphereResource
-import org.atmosphere.cpr.AtmosphereResourceEvent
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-
-
-class ChatAtmosphereHandler implements AtmosphereHandler <HttpServletRequest, HttpServletResponse> {
-
-    void onRequest(AtmosphereResource<HttpServletRequest, HttpServletResponse> event) throws IOException {
-
+    package a.package
+    
+    import org.atmosphere.cpr.AtmosphereHandler
+    import org.atmosphere.cpr.AtmosphereResource
+    import org.atmosphere.cpr.AtmosphereResourceEvent
+    import javax.servlet.http.HttpServletRequest
+    import javax.servlet.http.HttpServletResponse
+    
+    
+    class ChatAtmosphereHandler implements AtmosphereHandler <HttpServletRequest, HttpServletResponse> {
+    
+        void onRequest(AtmosphereResource<HttpServletRequest, HttpServletResponse> event) throws IOException {
+    
+        }
+    
+        void onStateChange (AtmosphereResourceEvent<HttpServletRequest, HttpServletResponse> event) throws IOException {
+        }
+    
     }
-
-    void onStateChange (AtmosphereResourceEvent<HttpServletRequest, HttpServletResponse> event) throws IOException {
-    }
-
-}
-`
 
 Using the `create-atmosphere-handler` is not required! Just create a Groovy or Java class that implements the `AtmosphereHandler` interface.
 
@@ -74,21 +72,19 @@ So be careful to indicate clearly the class of the handler in the parameter `cla
 Creating an Atmosphere handler through a Grails service is the easiest way to integrate Atmosphere in your application, in which case it's not necessary to declare the handler in the configuration file `AtmosphereConfig.groovy`.
 Simply add the static property `atmosphere` to an existing Grails service, and the Closures `onRequest` and `onStateChange`, as in the example below:
 
-`
-class MagneticPoetryService {
-
-    static transactional = false
-
-    static atmosphere = [mapping: '/atmosphere/magneticPoetry']
-                                        
-    def onRequest = { event ->
+    class MagneticPoetryService {
+    
+        static transactional = false
+    
+        static atmosphere = [mapping: '/atmosphere/magneticPoetry']
+                                            
+        def onRequest = { event ->
+        }
+    
+        def onStateChange = { event ->
+        }
+    
     }
-
-    def onStateChange = { event ->
-    }
-
-}
-`
 
 For the service to be associated with a handler, the static `atmosphere` field must be a Map containing the key mapping and specifying the path to the servlet Atmosphere (the equivalent of what one would specify for context-root in the `atmosphere.xml` file).
 
@@ -101,9 +97,7 @@ Note that the Grails service must be of singleton type, which is the default.
 The Atmosphere servlet has an API to add or remove a handler dynamically; it is an interesting approach because you can choose at run-time the mapping URI you want to associate to a handler when creating it.
 You access to the Atmosphere servlet (an instance of the class `com.odelia.grails.plugins.atmosphere.StratosphereServlet` that extends `org.atmosphere.cpr.AtmosphereServlet`) from a Grails controller with code like this:
 
-`
-def servlet = servletContext[com.odelia.grails.plugins.atmosphere.StratosphereServlet.ATMOSPHERE_PLUGIN_ATMOSPHERE_SERVLET]
-`
+    def servlet = servletContext[com.odelia.grails.plugins.atmosphere.StratosphereServlet.ATMOSPHERE_PLUGIN_ATMOSPHERE_SERVLET]
 
 So, using the reference, you can call methods like `addAtmosphereHandler` or `removeAtmosphereHandler`.
 
@@ -115,23 +109,19 @@ This method returns a map whose entries consist of pairs //mapping/broadcaster//
 
 In a Grails controller or service with the method `getBroadcaster`, you can post a message like this: 
 
-`broadcaster['/atmosphere/magneticPoetry'].broadcast('Hello world!')`
+    broadcaster['/atmosphere/magneticPoetry'].broadcast('Hello world!')
 
 
 #### The resources tag ####
 
 Since its 0.3.1, the Grails Atmosphere plugin defines the GSP tag `atmosphere:resources`; this tag permits to include JavaScript files coming from the Atmosphere jQuery plugin, in a GSP page.
 So, in a .gsp view you can use it like this: 
-`
 
-<atmosphere:resources />
-`
+    <atmosphere:resources />
 
 If for some raison, you don't want include the jQuery library used by the Atmosphere jQuery plugin, and just include the `jquery.atmosphere.js` file, you can do it with:
 
-`
-<g:javascript plugin="atmosphere" src="jquery.atmosphere.js" />
-`
+    <g:javascript plugin="atmosphere" src="jquery.atmosphere.js" />
 
 #### Limitations ####
 
@@ -149,30 +139,30 @@ During installation, the plugin creates the Atmosphere configuration file `Atmos
 
 Here is the original contents of this file:
 
-`
-atmospherePlugin {
-    servlet {
-        // Servlet initialization parameters
-        // Example: initParams = ['org.atmosphere.useNative': 'true', 'org.atmosphere.useStream': 'false']
-        initParams = []
-        urlPattern = '/atmosphere/*'
+    atmospherePlugin {
+
+        servlet {
+        
+            // Servlet initialization parameters
+            // Example: initParams = ['org.atmosphere.useNative': 'true', 'org.atmosphere.useStream': 'false']
+            initParams = []
+            urlPattern = '/atmosphere/*'
+        }
+        
+        handlers {
+            // This closure is used to generate the atmosphere.xml in META-INF folder, using a MarkupBuilder instance
+            atmosphereDotXml = {
+                //'atmosphere-handler'('context-root': '/atmosphere/chat', 'class-name': 'com.odelia.grails.plugins.atmosphere.ChatAtmosphereHandler')
+        }   
     }
-    handlers {
-        // This closure is used to generate the atmosphere.xml in META-INF folder, using a MarkupBuilder instance
-        atmosphereDotXml = {
-            //'atmosphere-handler'('context-root': '/atmosphere/chat', 'class-name': 'com.odelia.grails.plugins.atmosphere.ChatAtmosphereHandler')
-    }
-}
-`
+
 
 The Closure `atmosphereDotXml` defines Atmosphere handlers used in your Grails application, in addition to those defined through Grails services: this is used when compiling the application to generate the `atmosphere.xml` file with element document `atmosphere-handlers`; to build the XML subelements `atmosphere-handler`, the plugin assigns the execution of the Closure `atmosphereDotXml` to an instance of the Groovy class `MarkupBuilder`, and can generate the document `atmosphere.xml`.
 Thus the document `atmosphere.xml`, corresponding to the original configuration `AtmosphereConfig.groovy`, and having uncommented the call `'atmosphere-handler'()`, will include:
 
-`
-<atmosphere-handlers>
-  <atmosphere-handler context-root='/atmosphere/chat' class-name='com.odelia.grails.plugins.atmosphere.ChatAtmosphereHandler' />
-</atmosphere-handlers>
-`
+    <atmosphere-handlers>
+      <atmosphere-handler context-root='/atmosphere/chat' class-name='com.odelia.grails.plugins.atmosphere.ChatAtmosphereHandler' />
+    </atmosphere-handlers>
 
 The other configuration elements found in `atmospherePlugin.servlet` are used to define the parameters of the `AtmosphereServlet` servlet (actually a derived class), when the plugin participate to the building of the `web.xml` file: we find the definition of initialization parameters of the servlet and its URL mapping.
 
@@ -180,11 +170,9 @@ The other configuration elements found in `atmospherePlugin.servlet` are used to
 
 The `context.xml` file with this content:
 
-`
-<Context>
-    <Loader delegate="true"/>
-</Context>
-`
+    <Context>
+        <Loader delegate="true"/>
+    </Context>
 
 is created in the `WEB-INF` directory.
 
@@ -202,20 +190,17 @@ A file with the name `atmosphere-decorators.xml` is created in the `WEB-INF` dir
 
 The `atmosphere-decorators.xml` file contains something like:
 
-`
-<decorators>
-    <excludes>
-        <pattern>/atmosphere/*</pattern>
-    </excludes>
-</decorators>
-`
+    <decorators>
+        <excludes>
+            <pattern>/atmosphere/*</pattern>
+        </excludes>
+    </decorators>
+
 
 where the value of the `pattern` element is replaced by one defined in the Groovy configuration file `AtmosphereConfig.groovy` for `atmospherePlugin.servlet.urlPattern`.
 
 The `sitemesh.xml` file is changed by adding this XML element:
 
-`
-<excludes file="/WEB-INF/atmosphere-decorators.xml"/>
-`
+    <excludes file="/WEB-INF/atmosphere-decorators.xml"/>
 
 This change solves the errors that can occur with the use of the Jetty web container.
