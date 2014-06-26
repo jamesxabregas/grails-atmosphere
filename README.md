@@ -1,9 +1,3 @@
-grails-atmosphere
-=================
-
-Grails adapter for atmosphere
-
-
 ## Grails Atmosphere plugin ##
 
 This page describes the features of the [Grails Atmosphere plugin](http://grails.org/plugin/atmosphere/) that integrates the [Atmosphere](https://atmosphere.dev.java.net/) framework in a Grails application.
