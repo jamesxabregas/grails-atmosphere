@@ -33,10 +33,18 @@ class AtmosphereGrailsPlugin {
     def description = '''\\
 Provides integration with the Atmosphere framework, a portable AjaxPush/Comet framework.
 '''
-    def ctrlHanlers = []
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/atmosphere"
+    def documentation = "https://github.com/jamesxabregas/grails-atmosphere"
+
+    // Online location of the plugin's browseable source code.
+    def scm = [ url: "https://github.com/jamesxabregas/grails-atmosphere" ]
+
+    def license = "APACHE"
+
+    // Location of the plugin's issue tracker.
+    def issueManagement = [ system: "github", url: "https://github.com/jamesxabregas/grails-atmosphere/issues" ]
+
 
 	private def getAtmospherePropertyValue(service) {
 		def atmosphereValue = GrailsClassUtils.getStaticPropertyValue(service.clazz, 'atmosphere')
