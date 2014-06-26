@@ -129,14 +129,13 @@ In a Grails controller or service with the method `getBroadcaster`, you can post
 Since its 0.3.1, the Grails Atmosphere plugin defines the GSP tag `atmosphere:resources`; this tag permits to include JavaScript files coming from the Atmosphere jQuery plugin, in a GSP page.
 So, in a .gsp view you can use it like this: 
 `
-#!xml
+
 <atmosphere:resources />
 `
 
 If for some raison, you don't want include the jQuery library used by the Atmosphere jQuery plugin, and just include the `jquery.atmosphere.js` file, you can do it with:
 
 `
-#!xml
 <g:javascript plugin="atmosphere" src="jquery.atmosphere.js" />
 `
 
@@ -176,12 +175,11 @@ The Closure `atmosphereDotXml` defines Atmosphere handlers used in your Grails a
 Thus the document `atmosphere.xml`, corresponding to the original configuration `AtmosphereConfig.groovy`, and having uncommented the call `'atmosphere-handler'()`, will include:
 
 `
-#!xml
 <atmosphere-handlers>
   <atmosphere-handler context-root='/atmosphere/chat' class-name='com.odelia.grails.plugins.atmosphere.ChatAtmosphereHandler' />
 </atmosphere-handlers>
 `
-\\
+
 The other configuration elements found in `atmospherePlugin.servlet` are used to define the parameters of the `AtmosphereServlet` servlet (actually a derived class), when the plugin participate to the building of the `web.xml` file: we find the definition of initialization parameters of the servlet and its URL mapping.
 
 **context.xml**
@@ -189,12 +187,11 @@ The other configuration elements found in `atmospherePlugin.servlet` are used to
 The `context.xml` file with this content:
 
 `
-#!xml
 <Context>
     <Loader delegate="true"/>
 </Context>
 `
-\\
+
 is created in the `WEB-INF` directory.
 
 
@@ -212,21 +209,19 @@ A file with the name `atmosphere-decorators.xml` is created in the `WEB-INF` dir
 The `atmosphere-decorators.xml` file contains something like:
 
 `
-#!xml
 <decorators>
     <excludes>
         <pattern>/atmosphere/*</pattern>
     </excludes>
 </decorators>
 `
-\\
+
 where the value of the `pattern` element is replaced by one defined in the Groovy configuration file `AtmosphereConfig.groovy` for `atmospherePlugin.servlet.urlPattern`.
 
 The `sitemesh.xml` file is changed by adding this XML element:
 
 `
-#!xml
 <excludes file="/WEB-INF/atmosphere-decorators.xml"/>
 `
-\\
+
 This change solves the errors that can occur with the use of the Jetty web container.
