@@ -34,6 +34,8 @@ class AtmosphereGrailsPlugin {
 Provides integration with the Atmosphere framework, a portable AjaxPush/Comet framework.
 '''
 
+    def ctrlHanlers = [] //Plugin context handlers
+
     // URL to the plugin's documentation
     def documentation = "https://github.com/jamesxabregas/grails-atmosphere"
 
