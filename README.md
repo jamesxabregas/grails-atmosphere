@@ -47,13 +47,13 @@ If you don't enter a name for the handler, qualified or not, the command will as
     import javax.servlet.http.HttpServletResponse
     
     
-    class ChatAtmosphereHandler implements AtmosphereHandler <HttpServletRequest, HttpServletResponse> {
+    class ChatAtmosphereHandler implements AtmosphereHandler /*<HttpServletRequest, HttpServletResponse>*/ {
     
-        void onRequest(AtmosphereResource<HttpServletRequest, HttpServletResponse> event) throws IOException {
+        void onRequest(AtmosphereResource/*<HttpServletRequest, HttpServletResponse>*/ event) throws IOException {
     
         }
     
-        void onStateChange (AtmosphereResourceEvent<HttpServletRequest, HttpServletResponse> event) throws IOException {
+        void onStateChange (AtmosphereResourceEvent/*<HttpServletRequest, HttpServletResponse>*/ event) throws IOException {
         }
     
     }
