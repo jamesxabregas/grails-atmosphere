@@ -55,6 +55,9 @@ If you don't enter a name for the handler, qualified or not, the command will as
     
         void onStateChange (AtmosphereResourceEvent<HttpServletRequest, HttpServletResponse> event) throws IOException {
         }
+        
+        void destroy(){
+        }
     
     }
 
